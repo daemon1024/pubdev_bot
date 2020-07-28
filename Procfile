@@ -1,0 +1,1 @@
+worker: deno run --allow-env --allow-net mod.ts
