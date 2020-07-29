@@ -30,6 +30,7 @@ bot.on(UpdateType.Message, async ({ message }: any) => {
         await bot.sendMessage({
           chat_id: chatId,
           text: "No packages available for your search query",
+          reply_to_message_id: message.message_id,
         });
       } else {
         let ikb = data.packages.slice(0, 5).map((pkg: any) => {
@@ -44,6 +45,7 @@ bot.on(UpdateType.Message, async ({ message }: any) => {
           reply_markup: {
             inline_keyboard: ikb,
           },
+          reply_to_message_id: message.message_id,
         });
       }
     }
@@ -69,12 +71,11 @@ bot.on(UpdateType.CallbackQuery, async ({ callback_query }: any) => {
 
       let pkg = await response.json();
       query.shift();
-      let text = "*Package* : ```" + pkg.name + "```\n*Latest Version :* ```" +
+      let text = "*Package* : `" + pkg.name + "`\n*Latest Version :* `" +
         pkg.latest.version +
-        "```\n\n*Description :* ```" + pkg.latest.pubspec.description +
-        "``` \n\n*Pubspec :* ``` " + pkg.latest.pubspec.name + "\: \^" +
-        pkg.latest.pubspec.version + "```";
-      console.log(text);
+        "`\n\n*Description : * `" + pkg.latest.pubspec.description +
+        "` \n\n*Pubspec : * `" + pkg.latest.pubspec.name + "\: \^" +
+        pkg.latest.pubspec.version + "`";
       await bot.editMessageText({
         chat_id: message.chat.id,
         message_id: message.message_id,
