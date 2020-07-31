@@ -15,7 +15,7 @@ bot.on(UpdateType.Message, async ({ message }: any) => {
     const chatId = message.chat.id;
     console.log(message.text);
     const args = message?.text?.split(" ");
-    if (args && args[0] == "/pub") {
+    if (args && args[0] == "/pub" || args[0] == "/pub@pubdevbot") {
       const response = await fetch(
         `https://pub.dev/api/search?q=${args.shift() ? args : ""}`,
         {
